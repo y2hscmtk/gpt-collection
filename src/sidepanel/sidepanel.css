@@ -1,0 +1,301 @@
+:root {
+  color-scheme: light dark;
+  font-family: 'Noto Sans KR', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.sidepanel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #0f172a 0%, #1e293b 100%);
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.sidepanel__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidepanel__title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.sidepanel__subtitle {
+  font-size: 14px;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.sidepanel__empty {
+  border: 1px dashed rgba(148, 163, 184, 0.6);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  color: #cbd5f5;
+  background-color: rgba(30, 41, 59, 0.6);
+}
+
+.sidepanel__empty p {
+  margin: 8px 0;
+}
+
+.sidepanel__groups {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sidepanel__group {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidepanel__group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #cbd5f5;
+  font-size: 14px;
+}
+
+.sidepanel__group-title {
+  font-weight: 600;
+}
+
+.sidepanel__group-toggle {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(15, 23, 42, 0.45);
+  color: #cbd5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+
+.sidepanel__group-toggle:hover {
+  background: rgba(148, 163, 184, 0.22);
+  border-color: rgba(203, 213, 225, 0.6);
+  color: #facc15;
+}
+
+.sidepanel__group-toggle-icon {
+  width: 14px;
+  height: 14px;
+  transition: transform 140ms ease;
+}
+
+.sidepanel__group-toggle.is-expanded .sidepanel__group-toggle-icon {
+  transform: rotate(180deg);
+}
+
+.sidepanel__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidepanel__item {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+}
+
+.sidepanel__item-main {
+  text-align: left;
+  background: rgba(15, 23, 42, 0.35);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 12px 14px 12px 14px;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 140ms ease, background 140ms ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.sidepanel__item-main:hover {
+  border-color: rgba(148, 163, 184, 0.4);
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.sidepanel__item-main:focus-visible {
+  border-color: rgba(147, 197, 253, 0.6);
+  background: rgba(30, 41, 59, 0.55);
+}
+
+.sidepanel__item-main.is-editing {
+  cursor: text;
+}
+
+.sidepanel__item-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidepanel__item-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f8fafc;
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidepanel__item-snippet {
+  display: block;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #cbd5f5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow-wrap: anywhere;
+  margin-top: 4px;
+}
+
+.sidepanel__item-meta {
+  display: block;
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 10px;
+}
+
+.sidepanel__item-icons {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.sidepanel__item-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: rgba(15, 23, 42, 0.45);
+  color: #cbd5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+
+.sidepanel__item-icon:hover,
+.sidepanel__item-icon:focus-visible {
+  background: rgba(15, 23, 42, 0.55);
+  border-color: rgba(148, 163, 184, 0.4);
+  color: #f8fafc;
+}
+
+.sidepanel__item-icon-svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.sidepanel__item-icon--edit {
+  color: #93c5fd;
+  background: rgba(59, 130, 246, 0.16);
+}
+
+.sidepanel__item-icon--edit:hover,
+.sidepanel__item-icon--edit:focus-visible {
+  background: rgba(59, 130, 246, 0.26);
+  border-color: rgba(147, 197, 253, 0.6);
+}
+
+.sidepanel__item-icon--confirm {
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.16);
+}
+
+.sidepanel__item-icon--confirm:hover,
+.sidepanel__item-icon--confirm:focus-visible {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: rgba(16, 185, 129, 0.45);
+}
+
+.sidepanel__item-icon--cancel {
+  color: #f97316;
+  background: rgba(249, 115, 22, 0.16);
+}
+
+.sidepanel__item-icon--cancel:hover,
+.sidepanel__item-icon--cancel:focus-visible {
+  background: rgba(249, 115, 22, 0.26);
+  border-color: rgba(251, 191, 36, 0.4);
+}
+
+.sidepanel__item-icon--remove {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.sidepanel__item-icon--remove:hover,
+.sidepanel__item-icon--remove:focus-visible {
+  background: rgba(239, 68, 68, 0.24);
+  border-color: rgba(252, 165, 165, 0.4);
+}
+
+.sidepanel__item-title-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f8fafc;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(147, 197, 253, 0.4);
+  border-radius: 8px;
+  padding: 6px 10px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.sidepanel__item-title-input:focus {
+  border-color: rgba(147, 197, 253, 0.75);
+  background: rgba(30, 41, 59, 0.55);
+}
+
+@media (max-width: 720px) {
+  .sidepanel {
+    padding: 16px;
+    gap: 16px;
+  }
+}
