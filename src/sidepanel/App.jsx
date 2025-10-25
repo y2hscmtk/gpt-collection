@@ -212,6 +212,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [expandedGroups, setExpandedGroups] = useState(() => new Set());
   const [editing, setEditing] = useState({ id: null, value: '' });
+  const [searchQuery, setSearchQuery] = useState('');
   const editingInputRef = useRef(null);
 
   useEffect(() => {
@@ -256,10 +257,32 @@ const App = () => {
     };
   }, []);
 
+  const normalizedQuery = useMemo(() => searchQuery.trim().toLowerCase(), [searchQuery]);
+
+  const filteredBookmarks = useMemo(() => {
+    if (!normalizedQuery) {
+      return bookmarks;
+    }
+
+    return bookmarks.filter((bookmark) => {
+      const candidates = [
+        bookmark.title,
+        bookmark.snippet,
+        bookmark.conversationTitle,
+        bookmark.projectTitle
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+
+      return candidates.includes(normalizedQuery);
+    });
+  }, [bookmarks, normalizedQuery]);
+
   const grouped = useMemo(() => {
     const map = new Map();
 
-    bookmarks.forEach((bookmark) => {
+    filteredBookmarks.forEach((bookmark) => {
       const key = bookmark.projectId ?? bookmark.conversationId ?? bookmark.conversationTitle ?? 'unknown';
       if (!map.has(key)) {
         map.set(key, {
@@ -276,7 +299,7 @@ const App = () => {
       ...group,
       items: group.items.slice().sort((a, b) => (b.savedAt ?? 0) - (a.savedAt ?? 0))
     }));
-  }, [bookmarks]);
+  }, [filteredBookmarks]);
 
   const toggleGroup = useCallback((key) => {
     if (!key) {
@@ -404,6 +427,37 @@ const App = () => {
       <header className="sidepanel__header">
         <h1 className="sidepanel__title">GPT Favorites</h1>
         <p className="sidepanel__subtitle">Bookmark and revisit ChatGPT answers with ease.</p>
+        <label className="sidepanel__search" htmlFor="bookmark-search">
+          <span className="sidepanel__search-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M11 4a7 7 0 1 1-4.95 11.95L4 18l2.05-2.05A7 7 0 0 1 11 4Zm0 2a5 5 0 1 0 3.54 8.54A5 5 0 0 0 11 6Z"
+                fill="currentColor"
+                fillRule="evenodd"
+              />
+            </svg>
+          </span>
+          <input
+            id="bookmark-search"
+            type="search"
+            className="sidepanel__search-input"
+            placeholder="제목 또는 내용으로 검색"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+          />
+          {searchQuery && (
+            <button
+              type="button"
+              className="sidepanel__search-clear"
+              onClick={() => setSearchQuery('')}
+              aria-label="검색어 지우기"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 6l12 12M6 18 18 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+            </button>
+          )}
+        </label>
       </header>
 
       {loading ? (
@@ -415,12 +469,17 @@ const App = () => {
           <p>아직 즐겨찾기한 답변이 없습니다.</p>
           <p>ChatGPT 답변 옆의 별 아이콘을 눌러 즐겨찾기를 추가하세요.</p>
         </section>
+      ) : grouped.length === 0 ? (
+        <section className="sidepanel__empty">
+          <p>검색 결과가 없습니다.</p>
+          <p>다른 키워드로 다시 검색해 보세요.</p>
+        </section>
       ) : (
         <section className="sidepanel__groups" aria-live="polite">
           {grouped.map((group) => {
-            const isExpanded = expandedGroups.has(group.key);
+            const isExpanded = normalizedQuery ? true : expandedGroups.has(group.key);
             const visibleItems = isExpanded ? group.items : group.items.slice(0, 1);
-            const showToggle = group.items.length > 1;
+            const showToggle = !normalizedQuery && group.items.length > 1;
 
             return (
               <article key={group.key} className="sidepanel__group">
