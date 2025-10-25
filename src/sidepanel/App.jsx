@@ -467,7 +467,7 @@ const App = () => {
       ) : bookmarks.length === 0 ? (
         <section className="sidepanel__empty">
           <p>아직 즐겨찾기한 답변이 없습니다.</p>
-          <p>ChatGPT 답변 옆의 별 아이콘을 눌러 즐겨찾기를 추가하세요.</p>
+          <p>답변 옆의 북마크 버튼을 눌러 즐겨찾기를 추가하세요.</p>
         </section>
       ) : grouped.length === 0 ? (
         <section className="sidepanel__empty">

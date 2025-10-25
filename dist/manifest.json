@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "GPT Favorites",
+  "name": "GPT 즐겨찾기(GPT Favorites)",
   "description": "Save ChatGPT answers as bookmarks and review them in a convenient side panel.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "permissions": [
     "storage",
     "sidePanel",
